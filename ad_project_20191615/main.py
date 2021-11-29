@@ -15,9 +15,6 @@ class MainGame(QWidget):
         self.stage = Stage(level)
         self.t = (15- self.stage.getLevel())
 
-        #leftLife
-        self.leftLife = len(self.stage.indexList)
-
         # composing stage
         for i,j in self.stage.indexList:
             self.stage.stageList[i][j] = self.word.randWord()

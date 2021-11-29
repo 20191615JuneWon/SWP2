@@ -29,9 +29,6 @@ class Stage:
         self.__init__(self.level)
         return self.level
 
-    def remainTime(self):
-        return 3*self.level*2
-
 if __name__ == "__main__":
     a = Stage()
     print(a.stageList)
