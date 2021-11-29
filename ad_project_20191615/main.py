@@ -9,11 +9,13 @@ import random
 import sys
 
 class MainGame(QWidget):
-    def __init__(self, level = 1, parent = None):
+
+    def __init__(self, fileName = "words.txt", level = 1, parent = None):
         super().__init__(parent)
-        self.word = Word('words.txt')
+        self.word = Word(fileName)
         self.stage = Stage(level)
         self.t = (15- self.stage.getLevel())
+        self.leftWord = len(self.stage.indexList)
 
         # composing stage
         for i,j in self.stage.indexList:
@@ -29,7 +31,7 @@ class MainGame(QWidget):
         # label
         self.changeStageLabel = QLabel("Change Stage: ")
         self.currentLavelLabel = QLabel("Current Level {}".format(self.stage.getLevel()))
-        self.leftLifeLabel = QLabel("Left Word: {}".format(self.leftLife))
+        self.leftWordLabel = QLabel("Left Word: {}".format(self.leftWord))
         self.stateLabel = QLabel("Hello User")
         self.timeLabel = QLabel("Left Time: {}".format(self.t))
         self.wallLabel = QLabel("_")
@@ -90,7 +92,7 @@ class MainGame(QWidget):
         timeAndWordBox = QHBoxLayout()
         timeAndWordBox.addWidget(self.timeLabel)
         timeAndWordBox.addStretch(1)
-        timeAndWordBox.addWidget(self.leftLifeLabel)
+        timeAndWordBox.addWidget(self.leftWordLabel)
 
         #vBox
         vBox.addStretch(1)
@@ -154,8 +156,8 @@ class MainGame(QWidget):
             if(i !=  '        '): # value exist
                 return True
         else:
-            if(self.leftLife != 0):
-                self.stateLabel.setText("Left Word: {} but There is no Word!!".format(self.leftLife))
+            if(self.leftWord != 0):
+                self.stateLabel.setText("Left Word: {} but There is no Word!!".format(self.leftWord))
                 self.lstWriter()
                 return False
             else:
@@ -168,8 +170,8 @@ class MainGame(QWidget):
                 self.submitEdit.clear()
                 self.stateLabel.setText("Good Job!")
                 self.t = (16- self.stage.getLevel())
-                self.leftLife -=1
-                self.leftLifeLabel.setText("Left Word: {}".format(self.leftLife))
+                self.leftWord -=1
+                self.leftWordLabel.setText("Left Word: {}".format(self.leftWord))
                 self.timePrinter()
                 self.stage.stageList[i][j] = '        '
                 self.lstWriter()
@@ -191,12 +193,12 @@ class MainGame(QWidget):
         if(self.t <0):
             text = QMessageBox.question(self, 'Time Out!!', 'Wanna play again?', QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
             if text == QMessageBox.Yes:
-                self.__init__()
+                self.__init__(self.level)
             event.accept()
 
     # levelUp or quit
     def gameClear(self):
-        if(not self.leftLife):
+        if(not self.leftWord):
             if(self.stage.getLevel() <=2):
                 self.close()
                 self.__init__(self.stage.levelUp())
@@ -204,7 +206,6 @@ class MainGame(QWidget):
                 self.stateLabel.setText("Congratulation!")
 
 if __name__ == '__main__':
-
     app = QApplication(sys.argv)
     game = MainGame()
     game.show()

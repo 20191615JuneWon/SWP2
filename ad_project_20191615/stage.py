@@ -12,7 +12,7 @@ class Stage:
             for j in range(3*self.level):
                 self.stageList[i].append('') # len(the longest word) == 8
 
-        while len(self.indexList) < self.level*2*2:
+        while len(self.indexList) < self.level*4:
             idx = [random.randrange(3*self.level), random.randrange(3*self.level)]
             if(idx not in self.indexList):
                 self.indexList.append(idx)
@@ -21,7 +21,7 @@ class Stage:
         return self.level
 
     def getStrStage(self):
-        self.s = ["First", "Second", "Third", "Fourth", "Fifth"]
+        self.s = ["First", "Second", "Third"]
         return self.s[self.getLevel()-1]
 
     def levelUp(self):

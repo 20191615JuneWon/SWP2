@@ -15,3 +15,4 @@ class Word:
     def randWord(self):
         r = random.randrange(self.words.__len__())
         return self.words[r]
+
