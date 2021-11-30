@@ -10,7 +10,7 @@ import sys
 
 class MainGame(QWidget):
 
-    def __init__(self, fileName = "words.txt", level = 1, parent = None):
+    def __init__(self, level = 1, fileName = "words.txt", parent = None):
         super().__init__(parent)
         self.word = Word(fileName)
         self.stage = Stage(level)
@@ -193,7 +193,7 @@ class MainGame(QWidget):
         if(self.t <0):
             text = QMessageBox.question(self, 'Time Out!!', 'Wanna play again?', QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
             if text == QMessageBox.Yes:
-                self.__init__(self.level)
+                self.__init__(self.stage.getLevel())
             event.accept()
 
     # levelUp or quit
